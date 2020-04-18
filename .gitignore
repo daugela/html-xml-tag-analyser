@@ -1,0 +1,29 @@
+# Logs
+logs
+*.log*
+
+# Runtime data
+pids
+*.pid
+*.seed
+
+# IDEA/Webstorm project files
+.idea
+*.iml
+
+# Mac files
+.DS_Store
+
+#Python cache
+__pycache__
+*.pyc
+venv
+
+#Pip cache
+pipcache
+
+#Media files
+backend/media
+
+# Django DB
+backend/db.sqlite3

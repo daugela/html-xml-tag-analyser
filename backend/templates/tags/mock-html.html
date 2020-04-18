@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+    <head>
+      <meta charset="utf-8"/>
+      <title>Some title</title>
+      <meta name="description" content="This is a sample page test"/>
+    </head>
+    <body>
+          <div class="fake">
+              <h1>This is a not correct title</h1>
+              <p>Fake text here with some <strong>bold</strong></p>
+          </div>
+      <footer>
+          <div>
+              <div>
+                  <table>
+                      <tbody>
+                          <div>
+                              <!-- The following two tags should be deepest in doc -->
+                              <h2 class="not correct">Deepest h2 tag</h2>
+                              <p class="correct_deeper">This is a paragraph which
+                                  is the correct answer. It is next ~deeper below h2 (deepest sibling)</p>
+                              <!-- Unnecessary comment -->
+                          </div>
+                      </tbody>
+                  </table>
+                  <h3 class="empty"></h3>
+                  <p class="not-empty">Some footer text here</p>
+              </div>
+          </div>
+      </footer>
+    </body>
+</html>
