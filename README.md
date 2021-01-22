@@ -1,4 +1,4 @@
-# HTML. XML analysis tool
+# HTML/XML content analysis tool
 
 ## Task
 Write a simple web page or HTML analysis tool to extract specific insights about the webpage or a simple XML file.
@@ -15,21 +15,29 @@ Find the most commonly used tag.
 Find the longest path in the document tree where the most popular tag is used the most times.  
 All 3 insights can be presented in your preferred way.
 
-## Solution
-- Django backend with API endpoint
-- Docker container
-- TODO: Proper react Frontend
+## Solution overview
 
-## Run
+#### Backend:
+- Simple Django backend with DB on file and API endpoint with functional views
+- Some simple caching with saved entries for url queries
+- Tag parser with [BeautifulSoap](https://pypi.org/project/beautifulsoup4/)
+- Some tests with mocked html/xml files under [templates](backend/templates/tags)
+
+#### Frontend:
+- React app with persistent redux storage
+- With design you can never be satisfied 100% with :)
+- Works for html and xml content urls with some regex parsing
+- Implemented lookup history up to 5 urls
+- Some basic tests just to see if input and button exists
+
+#### Usage (currently for dev mode only):
+
 ```
-git clone https://github.com/daugela/html-xml-tag-analyser.git
+docker-compose up --build
 ```
-```
-cd html-xml-tag-analyser
-```
-```
-docker-compose up
-```
+
+## API
+
 Pass POST requests with url parameter to http://0.0.0.0:8000/process-tags  
 Expect ~response with processed url results:  
 

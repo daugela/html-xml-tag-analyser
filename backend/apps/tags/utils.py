@@ -5,8 +5,8 @@ import collections
 
 
 class Results(object):
-    def __init__(self, status: int, total: int, unique: int, top: [], deepest: str, path: str):
-        self.status = status
+    def __init__(self, url: str, total: int, unique: int, top: [], deepest: str, path: str):
+        self.url = url
         self.total = total
         self.unique = unique
         self.top = top
@@ -14,7 +14,7 @@ class Results(object):
         self.path = path
 
 
-def analyze_dom_tags(html):
+def analyze_dom_tags(url, html):
     # Shockingly %) BeautifulSoap does not have methods for statistical data extraction...
     # Using regex to quickly find all <tag openings that matches regex <lowercase[space]
     tags_all = re.findall(r"<[a-z0-9]+", html, re.MULTILINE)  # Using raw response.text here
@@ -67,7 +67,8 @@ def analyze_dom_tags(html):
             display_path = "{0} > {1}".format(parent.name, display_path)
 
     return Results(
-        200, len(tags_all),
+        url,
+        len(tags_all),
         len(tags_unique),
         list(tags_top),
         str(path_deepest[0]),

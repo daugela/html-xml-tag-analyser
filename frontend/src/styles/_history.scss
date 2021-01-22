@@ -1,0 +1,12 @@
+.history__entry {
+    background-color: $grey-1;
+    padding: 8px 16px;
+    margin-bottom: 8px;
+    border: 1px solid $grey-2;
+
+    &:hover{
+        border: 1px solid $lime-2;
+        cursor: pointer;
+    }
+
+}

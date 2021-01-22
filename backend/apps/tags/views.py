@@ -1,4 +1,5 @@
 import requests
+import json
 from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
@@ -11,7 +12,8 @@ from .models import Url, Count, Tag
 #################### Excuse #############################
  I should probably have used DRF for APIs under Django...
  But it is just a small project with few simple models :)
- So quick and ~dirty with function based views
+ And I am applying for Frontend engineering position :)
+ So therefore quick and ~dirty API with function based views
 #########################################################
 '''
 
@@ -21,13 +23,18 @@ from .models import Url, Count, Tag
 def process_tags(request):
 
     if request.method != "POST":
-        return JsonResponse({"status": 401, "message": "Invalid request"}, safe=False)
+        return JsonResponse({"status": 401, "message": "Invalid request"}, safe=False, status=401)
 
     # TODO: proper ~regex for incoming url. Currently (for simplicity) front-end validation only
-    url = request.POST.get("url", "")
+    json_data = json.loads(request.body)
+    
+    try:
+        url = json_data['url']
+    except KeyError:
+        JsonResponse({"status": 403, "message": "Invalid request passed"}, safe=False, status=403)
 
     if len(url) < 5:
-        return JsonResponse({"status": 403, "message": "Invalid url passed"}, safe=False)
+        return JsonResponse({"status": 403, "message": "Invalid url passed"}, safe=False, status=403)
 
     # Check cached url values - maybe we have processed/cached the requested page already..
     cache = Url.objects.filter(url=url).first()
@@ -37,12 +44,12 @@ def process_tags(request):
         try:
             response = requests.get(url)
             if response.status_code != 200:
-                return JsonResponse({"status": 503, "message": "Provided URL is not reachable"}, safe=False)
+                return JsonResponse({"status": 503, "message": "Provided URL is not reachable"}, safe=False, status=503)
         except requests.exceptions.RequestException as e:
-            return JsonResponse({"status": 503, "message": str(e)}, safe=False)
+            return JsonResponse({"status": 503, "message": str(e)}, safe=False, status=503)
 
         # Heavy lifting. Separated into utils
-        result = analyze_dom_tags(response.text)
+        result = analyze_dom_tags(url, response.text)
 
         # Save results ~cache into db
         new_url = Url.objects.create(
@@ -58,9 +65,9 @@ def process_tags(request):
             new_count = Count.objects.create(tag=new_tag, count=count)
             new_url.counts.add(new_count)
     else:
-        # Serving constructed form from cached data
+        # Serving constructed Results data from cached item
         result = Results(
-            status=200,
+            url=cache.url,
             total=cache.total,
             unique=cache.counts.count(),
             top=[[stats.tag.tag, stats.count] for stats in cache.counts.all()],  # TODO: Might also be improved

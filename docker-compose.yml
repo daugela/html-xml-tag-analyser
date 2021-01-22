@@ -3,21 +3,20 @@ version: '3'
 services:
   django:
     container_name: django_backend
-    build: ./backend
-    command: python backend/manage.py runserver 0.0.0.0:8000
+    build:
+      context: ./backend
+      dockerfile: ./Dockerfile
     volumes:
       - .:/code
     ports:
       - "8000:8000"
+    restart: unless-stopped
 
-  # TODO: Create frontend:)
-  #react:
-  #  container_name: react_frontend
-  #  build: ./frontend
-  #  volumes:
-  #    - '.:/app'
-  #    - '/app/node_modules'
-  #  ports:
-  #    - 3001:3000
-  #  environment:
-  #    - CHOKIDAR_USEPOLLING=true
+  react:
+    container_name: react_frontend
+    build:
+      context: ./frontend
+      dockerfile: ./Dockerfile.dev
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
