@@ -7,7 +7,7 @@
     width: 100%;
     border-radius: 4px;
     background-color: $blue-1;
-    font-size: 18px;
+    font-size: 14px;
     box-sizing: border-box;
     display: flex;
     align-items: center;
@@ -19,17 +19,6 @@
 
     &.button--big{
         padding: 24px 32px;
-        font-size: 21px;
-    }
-
-    &.button--link {
-        background: none !important;
-        color: $grey-4;
-        letter-spacing: -.4px;
-
-        &:hover{
-            background-color: $lime-3;
-        };
     }
 
     &.button--white {

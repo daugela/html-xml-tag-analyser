@@ -8,7 +8,7 @@ SECRET_KEY = 'fa2cg_oibgx9byov#19_^nhi@8x#b=p+%-58=@ge!4wr+ut3ia'
 DEBUG = True
 
 # Just for development on localhost
-ALLOWED_HOSTS = ["0.0.0.0", "127.0.0.1"]
+ALLOWED_HOSTS = ["0.0.0.0", "127.0.0.1", "django"] # Using django as docker container name
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -89,5 +89,7 @@ STATIC_URL = '/static/'
 # Whitelist some local urls for comfortable development locally :)
 CORS_ORIGIN_WHITELIST = (
     'http://127.0.0.1:8000',
-    'http://localhost:3000'  # React frontend in development
+    '127.0.0.1:8000',
+    'http://localhost:3000',
+    'http://127.0.0.1:3000',
 )
