@@ -36,6 +36,9 @@ All 3 insights can be presented in your preferred way.
 docker-compose up --build
 ```
 
+See running result on [localhost:3000](http://127.0.0.1:3000)
+
+
 ## API
 
 Pass POST requests with url parameter to http://0.0.0.0:8000/process-tags  
